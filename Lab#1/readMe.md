@@ -209,10 +209,15 @@ Se define **qué debe hacerse**, pero no **cómo se hace**.
 # Preguntas de reflexion
 
 1.  ¿Qué problema resuelve la encapsulación?
+    * La encapsulación resuelve para que algunas partes del programa no modifiquen datos de manera incorrecta.
 2.  ¿Cuál es la diferencia entre clase padre y clase hija?
+    * La clase hija, a diferencia de la otra, hereda los atributos del padre.
 3.  ¿Qué significa polimorfismo?
+    * El polimorfismo significa "muchas formas". En programación permite que un mismo método tenga distintos comportamientos en un objeto.
 4.  ¿Qué ventaja tiene la abstracción?
+    * La principal ventaja que tiene la abstracción es que no se ve la complejidad interna del sistema. Solo ve la información relevante. 
 5.  ¿En qué casos usarías herencia en un sistema real?
+    * Por ejemplo, usaría herencia en un programa donde debo guardar los datos de un vehículo. Auto y Moto heredan de una clase Vehículo, que tiene los atributos motor, frenos, luces, etc.
 
 ------------------------------------------------------------------------
 
@@ -233,3 +238,63 @@ Requisitos:
 
 ------------------------------------------------------------------------
 
+``` java
+public abstract class Vehiculo { //Clase abstracta, las demas clases heredan de el. No crea objetos.
+    protected String motor;
+    protected Integer frenos;
+    
+    public Vehiculo(String motor, Integer frenos) {
+        this.motor = motor;
+        this.frenos = frenos;
+    }
+    public abstract void arrancar();    
+}
+```
+
+``` java
+public class Auto extends Vehiculo {
+    private String modelo;
+
+    public Auto(String motor, Integer frenos, String modelo) {
+        super(motor, frenos);
+        this.motor = motor;
+        this.frenos = frenos;
+        this.modelo = modelo;
+    } 
+
+    @Override
+    public void arrancar() {
+        System.out.println("El auto " + modelo + " tiene motor " + motor + " con " + frenos + " frenos");    
+    }
+}
+```
+
+``` java
+public class Moto extends Vehiculo {
+    private Integer cilindrada;
+
+    public Moto(String motor, Integer frenos, Integer cilindrada) {
+        super(motor, frenos);
+        this.motor = motor;
+        this.frenos = frenos;
+        this.cilindrada = cilindrada;
+    } 
+
+    @Override
+    public void arrancar() {
+        System.out.println("La moto con motor " + motor + " arranca con patada. La moto tiene " + frenos + " frenos y una cilindrada de " + cilindrada);    
+    }
+}
+```
+
+``` java
+public class App {
+    public static void main(String[] args) throws Exception {
+        Vehiculo moto = new Moto("1.8 TURBO", 2, 1000);
+        moto.arrancar();
+
+        Vehiculo auto = new Auto("V8 BITURBO", 4, "Fiat 600");
+        auto.arrancar();
+    }
+}
+```
